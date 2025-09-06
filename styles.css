@@ -1,0 +1,42 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Calibri, Arial;
+    background-color: #f4f7f6;
+    color: #333;
+}
+#app-container {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h1 {
+    font-size: 2.5em;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+#input-container {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+}
+#todo-input {
+    flex-grow: 1;
+    padding: 12px;
+    font-size: 1em;
+}
+#add-button {
+    padding: 12px 20px;
+    font-size: 1em;
+    border: 2px solid #3498db;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    white-space: nowrap;
+}
