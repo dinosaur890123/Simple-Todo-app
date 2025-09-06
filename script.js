@@ -57,10 +57,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function loadTasks() {
-        const savedTasks = JSON.parse(localStorage.getItem('todos')) || [];
-        savedTasks.forEach(task => {
-            createTaskElement(task.text, task.completed);
-        });
+        const savedTasksRaw = localStorage.getItem('todos');
+        if (!savedTasksRaw) return;
+        try {
+            const savedTasks = JSON.parse(savedTasksRaw);
+            if (Array.isArray(savedTasks)) {
+                savedTasks.forEach(task => {
+                    if (task && typeof task.text === 'string' && typeof task.completed === 'boolean') {
+                        createTaskElement(task.text, task.completed);
+                    }
+                });
+            }
+        } catch (error) {
+            console.error("Error getting to dos from localstorage", error);
+        }
     }
     addButton.addEventListener('click', addTask);
     todoInput.addEventListener('keypress', (event) => {
