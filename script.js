@@ -18,19 +18,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const listItem = document.createElement('li');
         const taskSpan = document.createElement('span');
         taskSpan.textContent = text;
+        taskSpan.setAttribute('role', 'checkbox');
+        taskSpan.setAttribute('aria-checked', completed);
         if (completed) {
             taskSpan.classList.add('completed');
         }
         taskSpan.addEventListener('click', () => {
             taskSpan.classList.toggle('completed');
+            taskSpan.setAttribute('aria-checked', isCompleted);
             saveTasks();
         });
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
         deleteButton.className = 'delete-button';
+        deleteButton.setAttribute('aria-label', `Delete task: ${text}`);
         deleteButton.addEventListener('click', () => {
-            todoList.removeChild(listItem);
-            saveTasks();
+            if (listItem.parentNode === todoList) {
+                todoList.removeChild(listItem);
+                ariaLiveRegion.textContent = `Task "${text}" deleted.`;
+                saveTasks();
+            }
         });
 
         listItem.appendChild(taskSpan);
