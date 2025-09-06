@@ -1,37 +1,59 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     const todoInput = document.getElementById('todo-input');
     const addButton = document.getElementById('add-button');
     const todoList = document.getElementById('todo-list');
+    function saveTasks() {
+        const tasks = [];
+        todoList.querySelectorAll('li').forEach(listItem => {
+            const taskSpan = listItem.querySelector('span');
+            tasks.push({
+                text: taskSpan.textContent,
+                completed: taskSpan.classList.contains('completed')
+            });
+        });
+        localStorage.setItem('todos', JSON.stringify(tasks));
+    }
 
-    function addTask() {
-        const taskText = todoInput.value.trim();
-
-        if (taskText === "") {
-            return;
-        }
-
+    function createTaskElement(text, completed) {
         const listItem = document.createElement('li');
         const taskSpan = document.createElement('span');
-        taskSpan.textContent = taskText;
+        taskSpan.textContent = text;
+        if (completed) {
+            taskSpan.classList.add('completed');
+        }
         taskSpan.addEventListener('click', () => {
             taskSpan.classList.toggle('completed');
+            saveTasks();
         });
-
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
         deleteButton.className = 'delete-button';
-
         deleteButton.addEventListener('click', () => {
             todoList.removeChild(listItem);
+            saveTasks();
         });
 
         listItem.appendChild(taskSpan);
         listItem.appendChild(deleteButton);
         todoList.appendChild(listItem);
-
+    }
+    
+    function addTask() {
+        const taskText = todoInput.value.trim();
+        if (taskText === "") {
+            return;
+        }
+        createTaskElement(taskText, false);
+        saveTasks();
         todoInput.value = '';
         todoInput.focus();
+    }
+    
+    function loadTasks() {
+        const savedTasks = JSON.parse(localStorage.getItem('todos')) || [];
+        savedTasks.forEach(task => {
+            createTaskElement(task.text, task.completed);
+        });
     }
     addButton.addEventListener('click', addTask);
     todoInput.addEventListener('keypress', (event) => {
@@ -39,6 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
             addTask();
         }
     });
-
+    loadTasks();
 });
 

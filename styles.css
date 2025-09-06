@@ -40,3 +40,41 @@ h1 {
     border-radius: 0 5px 5px 0;
     white-space: nowrap;
 }
+#add-button:hover {
+    background-color: #2980b9;
+}
+
+#add-button:active {
+    background-color: #2471a3;
+}
+#todo-list {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+}
+#todo-list li {
+    background-color: white;
+    padding: 15px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+.completed {
+    text-decoration: line-through;
+    color: #95a5a6;
+}
+.delete-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.delete-button:hover {
+    background-color: #c0392b;
+}
